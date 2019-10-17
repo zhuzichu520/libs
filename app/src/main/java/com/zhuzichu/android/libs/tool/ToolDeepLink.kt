@@ -25,7 +25,7 @@ fun strToUri(urlStr: String?): Uri {
 
 /**
  * 获取深度链接中的"module"的值
- * 例: jollyhic://goods/10086 ，返回goods
+ * 例: xxx://goods/10086 ，返回goods
  *
  * @param deepLink 深度链接
  * @return module返回值
@@ -44,7 +44,7 @@ fun getDeepLinkModule(deepLink: Uri?): String {
 
 /**
  * 获取深度链接中的"id"的值
- * 例: jollyhic://goods/10086 ，返回10086
+ * 例: xxx://goods/10086 ，返回10086
  *
  * @param deepLink 深度链接
  * @return id部分返回值

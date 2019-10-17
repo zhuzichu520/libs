@@ -104,7 +104,6 @@ fun MutableList<String>.isElementEmpty(index: Int) = getOrNull(index).isNullOrEm
 /**
  * 将字符串首字母转为大写
  *
- * @param str 传入的字符串
  * @return 首字母大写后的字符串，若传入的字符串去掉首末空格后为空，则返回传入的字符串
  */
 fun String?.upperFirstLetter(): String? {
@@ -124,7 +123,6 @@ fun String?.upperFirstLetter(): String? {
 /**
  * 将字符串首字母转为小写
  *
- * @param str 传入的字符串
  * @return 首字母小写后的字符串，若传入的字符串去掉首末空格后为空，则返回传入的字符串
  */
 fun String?.lowerFirstLetter(): String? {

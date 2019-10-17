@@ -10,11 +10,11 @@ import android.os.Looper
 import android.os.Process
 import com.zhuzichu.android.libs.internal.MainHandler
 import java.util.*
+import kotlin.system.exitProcess
 
 /**
  * 获取当前app版本信息
  *
- * @param context context
  * @return 当前版本名称，获取不到时为 ""
  */
 fun Context.getVersionName(): String {
@@ -24,9 +24,9 @@ fun Context.getVersionName(): String {
 /**
  * 获取当前app版本号
  *
- * @param context 上下文
  * @return 当前版本号
  */
+@Suppress("DEPRECATION")
 fun Context.getVersionCode(): Int {
     return getPackageInfo()?.versionCode ?: 0
 }
@@ -41,7 +41,6 @@ fun generateUniqueCode(): String = UUID.randomUUID().toString()
 /**
  * 是否App进程启动
  *
- * @param context context
  * @return true:是
  */
 fun Context?.isMyAppProcess(): Boolean {
@@ -56,7 +55,6 @@ fun Context?.isMyAppProcess(): Boolean {
 /**
  * 根据Pid获取进程名称
  *
- * @param context context
  * @param pid     进程id
  * @return 进程名称 如果没有获取到则为空
  */
@@ -68,7 +66,6 @@ fun Context?.getProcessName(pid: Int): String {
 /**
  * 在进程中去寻找当前APP的信息，判断是否在前台运行
  *
- * @param context context
  * @return true:当前app正在前台；false：当前app在后台
  */
 fun Context?.isAppOnForeground(): Boolean {
@@ -82,7 +79,6 @@ fun Context?.isAppOnForeground(): Boolean {
 /**
  * 判断是否存在某程序
  *
- * @param context     context
  * @param packageName 包名
  * @return 对应包名程序安装时返回true，否则返回false
  */
@@ -97,7 +93,6 @@ fun Context?.isPackageInstalled(packageName: String?): Boolean {
 /**
  * Activity 是否Activity生命周期结束
  *
- * @param activity activity
  * @return true：已经结束
  */
 fun Activity?.isActivityFinishing() = this == null || isDestroyed
@@ -127,7 +122,7 @@ fun killApp(delayMillis: Long) {
  */
 fun killAppNow() {
     Process.killProcess(Process.myPid())
-    System.exit(0)
+    exitProcess(0)
 }
 
 /**

@@ -180,7 +180,7 @@ private fun getActiveNetWorkInfo(ctx: Context): NetworkInfo? =
 @RequiresApi(Build.VERSION_CODES.M)
 @SuppressLint("MissingPermission")
 private fun getNetworkCapabilities(ctx: Context): NetworkCapabilities? {
-    val connectivityManager = getConnectivityManager(ctx);
+    val connectivityManager = getConnectivityManager(ctx)
     return connectivityManager?.getNetworkCapabilities(connectivityManager.activeNetwork)
 }
 

@@ -55,9 +55,8 @@ fun getScreenHeight(context: Context): Int {
  */
 fun getRealScreenSize(context: Context): IntArray {
     val size = IntArray(2)
-    val windowManager = context.getSystemService(Context.WINDOW_SERVICE)
 
-    when (windowManager) {
+    when (val windowManager = context.getSystemService(Context.WINDOW_SERVICE)) {
         is WindowManager -> {
             val display = windowManager.defaultDisplay
             with(Point()) {
@@ -79,8 +78,7 @@ fun getRealScreenSize(context: Context): IntArray {
  * , 倒立{@link Surface#ROTATION_180}, 顺时针旋转90度{@link Surface#ROTATION_270}之一
  */
 fun getScreenRotation(context: Context): Int {
-    val windowManager = context.getSystemService(Context.WINDOW_SERVICE)
-    return when (windowManager) {
+    return when (val windowManager = context.getSystemService(Context.WINDOW_SERVICE)) {
         is WindowManager -> windowManager.defaultDisplay.rotation
         else -> Surface.ROTATION_0
     }

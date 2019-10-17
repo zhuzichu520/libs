@@ -3,9 +3,9 @@
 package com.zhuzichu.android.libs.tool
 
 import android.graphics.*
-import android.media.ExifInterface
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
+import androidx.exifinterface.media.ExifInterface
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 
@@ -67,8 +67,10 @@ fun readPictureDegree(filePath: String?): Int {
     }
 
     return try {
-        when (ExifInterface(filePath).getAttributeInt(ExifInterface.TAG_ORIENTATION
-            , ExifInterface.ORIENTATION_NORMAL)) {
+        when (ExifInterface(filePath).getAttributeInt(
+            ExifInterface.TAG_ORIENTATION
+            , ExifInterface.ORIENTATION_NORMAL
+        )) {
             ExifInterface.ORIENTATION_ROTATE_90 -> 90
             ExifInterface.ORIENTATION_ROTATE_180 -> 180
             ExifInterface.ORIENTATION_ROTATE_270 -> 270
@@ -102,7 +104,11 @@ fun changBitmapToGrey(originalBitmap: Bitmap?, greyBitmap: Bitmap?): Bitmap? {
 
     //创建承载灰色蒙板的图片实例
     val changeGreyBitmap = greyBitmap
-        ?: Bitmap.createBitmap(originalBitmap.width, originalBitmap.height, getBitmapConfig(originalBitmap))
+        ?: Bitmap.createBitmap(
+            originalBitmap.width,
+            originalBitmap.height,
+            getBitmapConfig(originalBitmap)
+        )
     val canvas = Canvas(changeGreyBitmap)
     val paint = Paint()
     //创建颜色变换矩阵
@@ -126,7 +132,12 @@ fun changBitmapToGrey(originalBitmap: Bitmap?, greyBitmap: Bitmap?): Bitmap? {
  * @param quality 压缩值，范围在0-100数值
  * @return 压缩后的图片，图片格式为JPEG
  */
-fun getCompressBitmapByConfigAndQuality(bitmap: Bitmap?, config: Bitmap.Config, @IntRange(from = 0, to = 100) quality: Int)
+fun getCompressBitmapByConfigAndQuality(
+    bitmap: Bitmap?, config: Bitmap.Config, @IntRange(
+        from = 0,
+        to = 100
+    ) quality: Int
+)
         : Bitmap? {
     if (bitmap == null) {
         return null
@@ -158,8 +169,10 @@ fun getCompressBitmapByConfigAndQuality(bitmap: Bitmap?, config: Bitmap.Config, 
  * @param quality  压缩值，范围在0-100数值
  * @return 压缩后的图片
  */
-fun getCompressBitmap(filePath: String?, config: Bitmap.Config, destW: Int, destH: Int
-                      , @IntRange(from = 0, to = 100) quality: Int): Bitmap? {
+fun getCompressBitmap(
+    filePath: String?, config: Bitmap.Config, destW: Int, destH: Int
+    , @IntRange(from = 0, to = 100) quality: Int
+): Bitmap? {
     if (filePath.isNullOrEmpty() || destH <= 0 || destW <= 0) {
         return null
     }

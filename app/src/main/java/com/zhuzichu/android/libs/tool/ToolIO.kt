@@ -300,9 +300,7 @@ fun toByteArray(input: InputStream): ByteArray {
 @Throws(IOException::class)
 fun toByteArray(input: InputStream, size: Int): ByteArray {
 
-    if (size < 0) {
-        throw IllegalArgumentException("Size must be equal or greater than zero: $size")
-    }
+    require(size >= 0) { "Size must be equal or greater than zero: $size" }
 
     if (size == 0) {
         return ByteArray(0)
@@ -571,7 +569,7 @@ fun writeChunked(data: ByteArray?, output: OutputStream) {
         var bytes = data.size
         var offset = 0
         while (bytes > 0) {
-            val chunk = Math.min(bytes, DEFAULT_BUFFER_SIZE)
+            val chunk = bytes.coerceAtMost(DEFAULT_BUFFER_SIZE)
             output.write(data, offset, chunk)
             bytes -= chunk
             offset += chunk
@@ -621,7 +619,7 @@ fun writeChunked(data: CharArray?, output: Writer) {
         var bytes = data.size
         var offset = 0
         while (bytes > 0) {
-            val chunk = Math.min(bytes, DEFAULT_BUFFER_SIZE)
+            val chunk = bytes.coerceAtMost(DEFAULT_BUFFER_SIZE)
             output.write(data, offset, chunk)
             bytes -= chunk
             offset += chunk

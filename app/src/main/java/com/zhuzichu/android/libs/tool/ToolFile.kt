@@ -10,36 +10,36 @@ import java.nio.file.Files
 /**
  * 1KB  Long型
  */
-val ONE_KB: Long = 1024
+const val ONE_KB: Long = 1024
 
 /**
  * 1KB  BigInteger型
  */
-val ONE_KB_BI = BigInteger.valueOf(ONE_KB)
+val ONE_KB_BI: BigInteger = BigInteger.valueOf(ONE_KB)
 /**
  * 1MB  Long型
  */
-val ONE_MB = ONE_KB * ONE_KB
+const val ONE_MB = ONE_KB * ONE_KB
 /**
  * 1MB BigInteger型
  */
-val ONE_MB_BI = ONE_KB_BI.multiply(ONE_KB_BI)
+val ONE_MB_BI: BigInteger = ONE_KB_BI.multiply(ONE_KB_BI)
 /**
  * 1GB
  */
-val ONE_GB_BI = ONE_KB_BI.multiply(ONE_MB_BI)
+val ONE_GB_BI: BigInteger = ONE_KB_BI.multiply(ONE_MB_BI)
 /**
  * 1TB
  */
-val ONE_TB_BI = ONE_KB_BI.multiply(ONE_GB_BI)
+val ONE_TB_BI: BigInteger = ONE_KB_BI.multiply(ONE_GB_BI)
 /**
  * 1PB
  */
-val ONE_PB_BI = ONE_KB_BI.multiply(ONE_TB_BI)
+val ONE_PB_BI: BigInteger = ONE_KB_BI.multiply(ONE_TB_BI)
 /**
  * 1EB
  */
-val ONE_EB_BI = ONE_KB_BI.multiply(ONE_PB_BI)
+val ONE_EB_BI: BigInteger = ONE_KB_BI.multiply(ONE_PB_BI)
 
 /**
  * 根据文件路径构建文件
@@ -70,14 +70,16 @@ fun getFile(directory: File? = null, vararg names: String?): File? {
  * @param file 文件 确保传入的文件可读&存在&不是文件夹
  */
 @Throws(IOException::class)
-fun readFileToString(file: File): String = openInputStream(file).use { inputStream -> toString(inputStream) }
+fun readFileToString(file: File): String =
+    openInputStream(file).use { inputStream -> toString(inputStream) }
 
 /**
  * 一行行读取文件内容并转化为 List<String>
  * @param file 文件
  */
 @Throws(IOException::class)
-fun readLines(file: File): List<String> = openInputStream(file).use { inputStream -> readLines(inputStream) }
+fun readLines(file: File): List<String> =
+    openInputStream(file).use { inputStream -> readLines(inputStream) }
 
 /**
  * 获取指定文件输入流 {@link FileInputStream}
@@ -127,10 +129,8 @@ private fun openOutputStream(file: File, append: Boolean): FileOutputStream {
         }
     } else {
         val parent = file.parentFile
-        if (parent != null) {
-            if (!parent.mkdirs() && !parent.isDirectory) {
-                throw IOException("Directory '$parent' could not be created")
-            }
+        if (parent != null && (!parent.mkdirs() && !parent.isDirectory)) {
+            throw IOException("Directory '$parent' could not be created")
         }
     }
     return FileOutputStream(file, append)
@@ -143,7 +143,7 @@ private fun openOutputStream(file: File, append: Boolean): FileOutputStream {
  * @return 生成的文件
  */
 fun writeFile(inputString: InputStream?, filePath: String?): File? {
-    if (null == inputString || isEmptyOrNull(filePath)) {
+    if (null == inputString || filePath.isNullOrBlank()) {
         return null
     }
 
@@ -349,13 +349,9 @@ fun forceMkDir(directory: File) {
             throw IOException(message)
         }
     } else {
-        if (!directory.mkdirs()) {
-            // Double-check that some other thread or process hasn't made
-            // the directory in the background
-            if (!directory.isDirectory) {
-                val message = "Unable to create directory $directory"
-                throw IOException(message)
-            }
+        if (!directory.mkdirs() && !directory.isDirectory) {
+            val message = "Unable to create directory $directory"
+            throw IOException(message)
         }
     }
 }

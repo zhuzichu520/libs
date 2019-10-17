@@ -112,11 +112,8 @@ fun getErrLogMsg(e: Throwable?): String {
  */
 fun throwExceptionOnUIThread(msg: String?) {
     if (mIsDebugEnable) {
-        if (isUIThread()) {
-            throw IllegalStateException(if (msg.isNullOrEmpty()) "" else msg)
-        } else {
-            MainHandler.post(Runnable { throw IllegalAccessError(if (msg.isNullOrEmpty()) "" else msg) })
-        }
+        check(!isUIThread()) { if (msg.isNullOrEmpty()) "" else msg }
+        MainHandler.post(Runnable { throw IllegalAccessError(if (msg.isNullOrEmpty()) "" else msg) })
     }
 }
 

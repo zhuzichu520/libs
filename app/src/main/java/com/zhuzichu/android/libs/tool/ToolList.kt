@@ -57,3 +57,13 @@ fun <V> clear(sourceList: MutableList<V>?) {
     }
 
 }
+
+/**
+ * 替换List某个元素。
+ *
+ * @param index 要替换的元素下标
+ */
+fun <T> List<T>.replaceAt(index: Int, replace: (T) -> T): List<T> = ArrayList(this).apply {
+    val item = this[index]
+    this[index] = replace(item)
+}

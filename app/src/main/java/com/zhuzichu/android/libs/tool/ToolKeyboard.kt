@@ -7,19 +7,18 @@ import android.content.Context
 import android.graphics.Rect
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import android.widget.FrameLayout
 
 /**
  * 打开软键盘
  *
  * @param context  上下文
- * @param editText 需要打开软键盘的编辑框
+ * @param view 需要打开软键盘的编辑框
  */
-fun showKeyboard(context: Context?, editText: EditText?) {
+fun showKeyboard(context: Context?, view: View?) {
     val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
 
-    editText?.let {
+    view?.let {
         //当视图未获取焦点时，手动使其获取焦点
         if (!it.isFocused) {
             it.requestFocus()

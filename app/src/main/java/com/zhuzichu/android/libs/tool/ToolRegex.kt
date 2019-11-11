@@ -16,7 +16,7 @@ const val REGEX_EMAIL =
  * @param email  待验证的邮箱
  * @return       true：符合邮箱规则
  */
-fun isEmail(email: String?): Boolean = isNotEmpty(email) && Pattern.matches(REGEX_EMAIL, email)
+fun isEmail(email: String?): Boolean = !email.isNullOrEmpty() && Pattern.matches(REGEX_EMAIL, email)
 
 /**
  * 验证字符串是否满足正则表达式
@@ -26,7 +26,7 @@ fun isEmail(email: String?): Boolean = isNotEmpty(email) && Pattern.matches(REGE
  * @return       true：传入的字符串满足正则规则
  */
 fun isMatches(input: String?, regex: String): Boolean =
-    isNotEmpty(input) && Pattern.matches(regex, input)
+    !input.isNullOrEmpty() && Pattern.matches(regex, input)
 
 /**
  * 替换所有正则匹配的部分

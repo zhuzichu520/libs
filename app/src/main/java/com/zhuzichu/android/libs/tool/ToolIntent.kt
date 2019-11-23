@@ -20,8 +20,12 @@ import java.io.File
  * @param context    上下文
  * @param nextActCls 下一个Activity
  */
-fun <T> startActivity(context: Context, nextActCls: Class<T>) {
-    startActivity(context, nextActCls, null)
+fun <T> startActivity(
+    context: Context,
+    nextActCls: Class<T>,
+    closure: (Intent.() -> Unit)? = null
+) {
+    startActivity(context, nextActCls, null, closure)
 }
 
 /**
@@ -31,8 +35,15 @@ fun <T> startActivity(context: Context, nextActCls: Class<T>) {
  * @param nextActCls 下一个Activity
  * @param bundle     携带的参数Bundle,可为空
  */
-fun <T> startActivity(context: Context, nextActCls: Class<T>, bundle: Bundle?) {
-    startActivity(context, nextActCls, bundle, null)
+fun <T> startActivity(
+    context: Context,
+    nextActCls: Class<T>,
+    bundle: Bundle?,
+    closure: (Intent.() -> Unit)? = null
+) {
+    startActivity(
+        context, nextActCls, bundle, null, closure
+    )
 }
 
 /**
@@ -43,8 +54,15 @@ fun <T> startActivity(context: Context, nextActCls: Class<T>, bundle: Bundle?) {
  * @param bundle     携带的参数Bundle,可为空
  * @param options
  */
-fun <T> startActivity(context: Context, nextActCls: Class<T>, bundle: Bundle?, options: Bundle?) {
+fun <T> startActivity(
+    context: Context,
+    nextActCls: Class<T>,
+    bundle: Bundle?,
+    options: Bundle?,
+    closure: (Intent.() -> Unit)? = null
+) {
     val intent = Intent(context, nextActCls)
+    closure?.invoke(intent)
     bundle?.let { intent.putExtras(it) }
     context.startActivity(intent, options)
 }
@@ -61,9 +79,11 @@ fun <T> startActivity(context: Context, nextActCls: Class<T>, bundle: Bundle?, o
  */
 fun <T> startActivity4Result(
     context: Context,
-    nextActCls: Class<T>, @IntRange(from = 0) requestCode: Int
+    nextActCls: Class<T>,
+    @IntRange(from = 0) requestCode: Int,
+    closure: (Intent.() -> Unit)? = null
 ) {
-    startActivity4Result(context, nextActCls, requestCode, null)
+    startActivity4Result(context, nextActCls, requestCode, null, closure)
 }
 
 /**
@@ -77,10 +97,13 @@ fun <T> startActivity4Result(
  * @param requestCode 请求码
  */
 fun <T> startActivity4Result(
-    context: Context, nextActCls: Class<T>, @IntRange(from = 0) requestCode: Int
-    , bundle: Bundle?
+    context: Context,
+    nextActCls: Class<T>,
+    @IntRange(from = 0) requestCode: Int,
+    bundle: Bundle?,
+    closure: (Intent.() -> Unit)? = null
 ) {
-    startActivity4Result(context, nextActCls, requestCode, bundle, null)
+    startActivity4Result(context, nextActCls, requestCode, bundle, null, closure)
 }
 
 
@@ -96,12 +119,16 @@ fun <T> startActivity4Result(
  * @param options
  */
 fun <T> startActivity4Result(
-    context: Context, nextActCls: Class<T>, @IntRange(from = 0) requestCode: Int
-    , bundle: Bundle?, options: Bundle?
+    context: Context,
+    nextActCls: Class<T>,
+    @IntRange(from = 0) requestCode: Int,
+    bundle: Bundle?,
+    options: Bundle?,
+    closure: (Intent.() -> Unit)? = null
 ) {
     val intent = Intent(context, nextActCls)
+    closure?.invoke(intent)
     bundle?.let { intent.putExtras(it) }
-
     if (context is Activity) {
         context.startActivityForResult(intent, requestCode, options)
     }

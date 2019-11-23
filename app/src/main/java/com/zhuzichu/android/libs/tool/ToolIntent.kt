@@ -32,11 +32,23 @@ fun <T> startActivity(context: Context, nextActCls: Class<T>) {
  * @param bundle     携带的参数Bundle,可为空
  */
 fun <T> startActivity(context: Context, nextActCls: Class<T>, bundle: Bundle?) {
+    startActivity(context, nextActCls, bundle, null)
+}
+
+/**
+ * 启动下一个Activity
+ *
+ * @param context    上下文
+ * @param nextActCls 下一个Activity
+ * @param bundle     携带的参数Bundle,可为空
+ * @param options
+ */
+fun <T> startActivity(context: Context, nextActCls: Class<T>, bundle: Bundle?, options: Bundle?) {
     val intent = Intent(context, nextActCls)
     bundle?.let { intent.putExtras(it) }
-
-    context.startActivity(intent)
+    context.startActivity(intent, options)
 }
+
 
 /**
  * 启动下一个Activity，带返回结果
@@ -47,7 +59,10 @@ fun <T> startActivity(context: Context, nextActCls: Class<T>, bundle: Bundle?) {
  * @param nextActCls  下一个Activity
  * @param requestCode 请求码
  */
-fun <T> startActivity4Result(context: Context, nextActCls: Class<T>, @IntRange(from = 0) requestCode: Int) {
+fun <T> startActivity4Result(
+    context: Context,
+    nextActCls: Class<T>, @IntRange(from = 0) requestCode: Int
+) {
     startActivity4Result(context, nextActCls, requestCode, null)
 }
 
@@ -61,13 +76,34 @@ fun <T> startActivity4Result(context: Context, nextActCls: Class<T>, @IntRange(f
  * @param bundle      携带的参数Bundle,可为空
  * @param requestCode 请求码
  */
-fun <T> startActivity4Result(context: Context, nextActCls: Class<T>, @IntRange(from = 0) requestCode: Int
-                             , bundle: Bundle?) {
+fun <T> startActivity4Result(
+    context: Context, nextActCls: Class<T>, @IntRange(from = 0) requestCode: Int
+    , bundle: Bundle?
+) {
+    startActivity4Result(context, nextActCls, requestCode, bundle, null)
+}
+
+
+/**
+ * 启动下一个Activity，带返回结果
+ *
+ * @param context     上下文 <br/>
+ *                    PS：此处的参数不能传入View.getContext()，在5.0以下的手机getContext方法获取的类型为TintContextWrapper
+ *                    不能转化为Activity类型，也不能传入ApplicationContext
+ * @param nextActCls  下一个Activity
+ * @param bundle      携带的参数Bundle,可为空
+ * @param requestCode 请求码
+ * @param options
+ */
+fun <T> startActivity4Result(
+    context: Context, nextActCls: Class<T>, @IntRange(from = 0) requestCode: Int
+    , bundle: Bundle?, options: Bundle?
+) {
     val intent = Intent(context, nextActCls)
     bundle?.let { intent.putExtras(it) }
 
     if (context is Activity) {
-        context.startActivityForResult(intent, requestCode)
+        context.startActivityForResult(intent, requestCode, options)
     }
 }
 
@@ -163,8 +199,10 @@ fun jumpToSystemCamera(ctx: Context?, file: File?, @IntRange(from = 0) requestCo
  * @return 文件类型的uri
  */
 fun getUriForFile(ctx: Context, file: File): Uri {
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) FileProvider.getUriForFile(ctx
-        , "${ctx.packageManager}.fileprovider", file) else Uri.fromFile(file)
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) FileProvider.getUriForFile(
+        ctx
+        , "${ctx.packageManager}.fileprovider", file
+    ) else Uri.fromFile(file)
 }
 
 /**

@@ -22,6 +22,10 @@ object MainHandler {
         }
     }
 
+    fun post(closure: () -> Unit) {
+        post { closure.invoke() }
+    }
+
     /**
      * 延迟delayMillis毫秒后，在主线程执行runnable
      *
@@ -30,6 +34,10 @@ object MainHandler {
      */
     fun postDelayed(runnable: Runnable, delayMillis: Long) {
         mHandler.postDelayed(runnable, delayMillis)
+    }
+
+    fun postDelayed(closure: () -> Unit, delayMillis: Long) {
+        postDelayed(Runnable { closure.invoke() }, delayMillis)
     }
 
     /**

@@ -36,7 +36,7 @@ object MainHandler {
         mHandler.postDelayed(runnable, delayMillis)
     }
 
-    fun postDelayed(closure: () -> Unit, delayMillis: Long) {
+    fun postDelayed(delayMillis: Long = 150, closure: () -> Unit) {
         postDelayed(Runnable { closure.invoke() }, delayMillis)
     }
 

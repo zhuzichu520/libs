@@ -3,19 +3,12 @@
 package com.zhuzichu.android.libs.tool
 
 /**
- * desc: List工具类 <br/>
- * time: 2019/6/17 下午7:13 <br/>
- * author: Logan <br/>
- * since V 1.3.0.7 <br/>
- */
-
-/**
  * 集合是否为空（null 或 size==0）。
  *
  * @param sourceList 源集合数据
  * @return true：为空
  */
-fun <V> isNullOrEmpty(sourceList: List<V>?): Boolean = sourceList?.isEmpty() ?: true
+fun <V> isNullOrEmpty(sourceList: List<V>?): Boolean = sourceList.isNullOrEmpty()
 
 /**
  * 集合中元素个数是否大于0。
@@ -24,6 +17,11 @@ fun <V> isNullOrEmpty(sourceList: List<V>?): Boolean = sourceList?.isEmpty() ?: 
  * @return true：是
  */
 fun <V> isNotEmpty(sourceList: List<V>?): Boolean = !isNullOrEmpty(sourceList)
+
+fun <V> doNotEmpty(sourceList: List<V>?, closure: List<V>.() -> Unit) {
+    if (!sourceList.isNullOrEmpty())
+        closure.invoke(sourceList)
+}
 
 /**
  * 获取集合中元素个数。
